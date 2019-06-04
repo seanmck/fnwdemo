@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "devspaces-temp.fullname" . }}
+  labels:
+    app: {{ template "devspaces-temp.name" . }}
+    chart: {{ template "devspaces-temp.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "devspaces-temp.name" . }}
+    release: {{ .Release.Name }}
